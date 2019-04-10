@@ -1,13 +1,11 @@
 defmodule BerlinPhotoFetcher.Unsplash.Producer do
-  def call(query, page \\ 1) do
-    query
-    |> build_url(page)
-    |> get
+  def call(url) do
+    url |> get
   end
 
-  defp build_url(query, page) do
-    "https://api.unsplash.com/search/photos?page=#{page}&query=#{query}"
-  end
+  # defp build_url(query, page) do
+  #   "https://api.unsplash.com/search/photos?page=#{page}&query=#{query}"
+  # end
 
   defp headers() do
     [Authorization: "Client-ID " <> application_id()]
