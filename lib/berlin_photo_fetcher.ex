@@ -7,19 +7,8 @@ defmodule BerlinPhotoFetcher do
     BerlinPhotoFetcher.QueryFetcher.build("Berlin")
   end
 
-  def fetch_and_store_on_aws_bucket() do
-    fetch()
-    |> store_on_aws_bucket()
-  end
-
-  def fetch_and_store_local() do
-    fetch()
-    |> BerlinPhotoFetcher.Store.Local.call()
-  end
-
-  def fetch_and_store_on_aws_rds() do
-    fetch()
-    |> store_on_aws_rds()
+  def store_local(stream) do
+    BerlinPhotoFetcher.Store.Local.call(stream)
   end
 
   defp store_on_aws_bucket(photo_stream) do
