@@ -9,7 +9,7 @@ defmodule BerlinPhotoFetcher.Application do
     # List all child processes to be supervised
     children = [
       # Starts a worker by calling: BerlinPhotoFetcher.Worker.start_link(arg)
-      # {BerlinPhotoFetcher.Worker, arg}
+      {BerlinPhotoFetcher.Repo, []}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

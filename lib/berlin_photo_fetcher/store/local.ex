@@ -5,18 +5,19 @@ defmodule BerlinPhotoFetcher.Store.Local do
   end
 
   defp save_locally(photo) do
+    IO.puts("Saving photo #{photo.ext_id}")
     photo.url
     |> HTTPotion.get
     |> extract_binary
-    |> save_to_folder(photo.id)
+    |> save_to_folder(photo.ext_id)
   end
 
   defp extract_binary(http_response) do
     http_response.body
   end
 
-  defp save_to_folder(photo_binary, photo_id) do
-    with {:ok, file} <- File.open("#{photo_id}.jpg", [:write]) do
+  defp save_to_folder(photo_binary, ext_id) do
+    with {:ok, file} <- File.open("photos/#{ext_id}.jpg", [:write]) do
       IO.binwrite(file, photo_binary)
     end
   end

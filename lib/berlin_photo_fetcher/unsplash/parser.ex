@@ -15,13 +15,16 @@ defmodule BerlinPhotoFetcher.Unsplash.Parser do
 
   defp to_photo(photo_json) do
     %Photo{
-      id: photo_json["id"],
+      ext_id: photo_json["id"],
       url: photo_json["urls"]["full"],
       meta: %{
         tags: build_tags(photo_json["tags"]),
         likes: photo_json["likes"],
-        owner: owner(photo_json["user"]["first_name"], photo_json["user"]["last_name"]),
-        text: photo_json["alt_description"]
+        text: photo_json["alt_description"],
+        owner: owner_tag(photo_json["user"]),
+        alt: photo_json["alt_description"],
+        updated_at: photo_json["updated_at"],
+        sponsored: photo_json["sponsored"],
       }
     }
   end
@@ -32,10 +35,11 @@ defmodule BerlinPhotoFetcher.Unsplash.Parser do
     |> List.flatten()
   end
 
-  defp owner(nil, last_name), do: last_name
-  defp owner(first_name, nil), do: first_name
-
-  defp owner(first_name, last_name) do
-    first_name <> last_name
+  defp owner_tag(user_json) do
+    %{
+      name: user_json["name"],
+      instagram: user_json["instagram_username"],
+      total_photos: user_json["total_photos"]
+    }
   end
 end

@@ -11,11 +11,11 @@ defmodule BerlinPhotoFetcher do
     BerlinPhotoFetcher.Store.Local.call(stream)
   end
 
-  defp store_on_aws_bucket(photo_stream) do
-    photo_stream
-    |> Stream.map(fn photo -> photo.url end)
+  def store_db(stream) do
+    BerlinPhotoFetcher.Store.DB.call(stream)
   end
 
-  defp store_on_aws_rds(photo_stream) do
+  def fetch_all do
+    fetch() |> store_db() |> Enum.to_list
   end
 end
